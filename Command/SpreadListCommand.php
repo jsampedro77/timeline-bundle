@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * This command will show all services which are defined as spread.
  */
-class SpreadListCommand extends ContainerAwareCommand
+class SpreadListCommand extends \Symfony\Component\Console\Command\Command
 {
     /**
      * {@inheritdoc}

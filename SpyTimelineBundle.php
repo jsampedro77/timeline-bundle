@@ -18,11 +18,11 @@ class SpyTimelineBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new AddSpreadCompilerPass());
-        $container->addCompilerPass(new AddFilterCompilerPass());
-        $container->addCompilerPass(new AddRegistryCompilerPass());
-        $container->addCompilerPass(new AddDeliveryMethodCompilerPass());
-        $container->addCompilerPass(new AddLocatorCompilerPass());
-        $container->addCompilerPass(new AddComponentDataResolver());
+        $container->addCompilerPass(new AddSpreadCompilerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
+        $container->addCompilerPass(new AddFilterCompilerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
+        $container->addCompilerPass(new AddRegistryCompilerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
+        $container->addCompilerPass(new AddDeliveryMethodCompilerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
+        $container->addCompilerPass(new AddLocatorCompilerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
+        $container->addCompilerPass(new AddComponentDataResolver(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
     }
 }

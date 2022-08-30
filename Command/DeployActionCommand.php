@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * This command will deploy each actions (see limit option) which
  * has PUBLISHED on status_wanted.
  */
-class DeployActionCommand extends ContainerAwareCommand
+class DeployActionCommand extends \Symfony\Component\Console\Command\Command
 {
     /**
      * {@inheritdoc}
