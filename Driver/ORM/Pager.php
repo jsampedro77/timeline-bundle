@@ -5,6 +5,7 @@ namespace Spy\TimelineBundle\Driver\ORM;
 use Doctrine\ORM\QueryBuilder as DoctrineQueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Spy\Timeline\ResultBuilder\Pager\PagerInterface;
+use Traversable;
 
 class Pager implements PagerInterface, \IteratorAggregate, \Countable, \ArrayAccess
 {
@@ -38,84 +39,58 @@ class Pager implements PagerInterface, \IteratorAggregate, \Countable, \ArrayAcc
         }
 
         if ($limit) {
-            $offset = ($page - 1) * (int) $limit;
+            $offset = ($page - 1) * (int)$limit;
 
             $target
                 ->setFirstResult($offset)
-                ->setMaxResults($limit)
-            ;
+                ->setMaxResults($limit);
         }
 
-        $paginator       = new Paginator($target, true);
-        $this->page      = $page;
-        $this->items     = (array) $paginator->getIterator();
+        $paginator = new Paginator($target, true);
+        $this->page = $page;
+        $this->items = (array)$paginator->getIterator();
         $this->nbResults = count($paginator);
-        $this->lastPage  = intval(ceil($this->nbResults / $limit));
+        $this->lastPage = intval(ceil($this->nbResults / $limit));
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLastPage()
+    public function getLastPage(): int
     {
         return $this->lastPage;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function haveToPaginate()
+    public function haveToPaginate(): bool
     {
         return $this->getLastPage() > 1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         return $this->nbResults;
     }
 
-    /**
-     * @param array $items items
-     */
     public function setItems(array $items)
     {
         $this->items = $items;
     }
 
-    /**
-     * @return \ArrayIterator
-     */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new \ArrayIterator($this->items);
     }
 
-    /**
-     * @return integer
-     */
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value):void
     {
         if (is_null($offset)) {
             $this->items[] = $value;
@@ -124,29 +99,18 @@ class Pager implements PagerInterface, \IteratorAggregate, \Countable, \ArrayAcc
         }
     }
 
-    /**
-     * @param  mixed   $offset
-     * @return boolean
-     */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->items[$offset]);
     }
 
-    /**
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->items[$offset]);
     }
 
-    /**
-     * @param  mixed $offset
-     * @return mixed
-     */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
-        return isset($this->items[$offset]) ? $this->items[$offset] : null;
+        return $this->items[$offset] ?? null;
     }
 }
