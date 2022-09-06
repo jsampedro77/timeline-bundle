@@ -71,7 +71,7 @@ class TimelineExtension extends \Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions():array
     {
         return array(
             new \Twig_SimpleFunction('timeline' ,array($this, 'renderContextualTimeline'), array('is_safe' => array('html'))),
@@ -84,7 +84,7 @@ class TimelineExtension extends \Twig_Extension
     /**
      * {@inheritDoc}
      */
-    public function getTokenParsers()
+    public function getTokenParsers():array
     {
         return array(
             // {% timeline_action_theme timeline "Acme::components.html.twig" %}
