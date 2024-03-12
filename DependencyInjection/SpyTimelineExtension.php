@@ -28,7 +28,6 @@ class SpyTimelineExtension extends Extension
         $loader->load('resolve_component.xml');
         $loader->load('result_builder.xml');
         $loader->load('spread.xml');
-        $loader->load('twig.xml');
 
         $driver = null;
 
@@ -110,13 +109,6 @@ class SpyTimelineExtension extends Extension
         foreach ($notifiers as $notifier) {
             $definition->addMethodCall('addNotifier', array(new Reference($notifier)));
         }
-
-        //twig
-        $render = $config['render'];
-        $container->setParameter('spy_timeline.render.path', $render['path']);
-        $container->setParameter('spy_timeline.render.fallback', $render['fallback']);
-        $container->setParameter('spy_timeline.render.i18n.fallback', isset($render['i18n']) && isset($render['i18n']['fallback']) ? $render['i18n']['fallback'] : null);
-        $container->setParameter('spy_timeline.twig.resources', $render['resources']);
 
         // query_builder
         $queryBuilder = $config['query_builder'];
